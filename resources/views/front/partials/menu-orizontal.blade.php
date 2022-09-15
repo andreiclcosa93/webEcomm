@@ -20,8 +20,16 @@
             <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
         </div>
         <div class="navbar-nav ml-auto py-0">
-            <a href="" class="nav-item nav-link">Login</a>
+            @guest
+            <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
             <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
+            @endguest
+            @auth
+            <form action="{{ route('logout') }}" method="POST" class="d-none" id="logout-form">
+                @csrf
+            </form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-item nav-link">Logout</a>
+            @endauth
         </div>
     </div>
 </nav>
