@@ -15,7 +15,8 @@ class PasswordResetLinkController extends Controller
      */
     public function create()
     {
-        return view('auth.forgot-password');
+        // return view('auth.forgot-password');
+        return view('front.user.reset-password');
     }
 
     /**
@@ -30,7 +31,12 @@ class PasswordResetLinkController extends Controller
     {
         $request->validate([
             'email' => ['required', 'email'],
-        ]);
+        ],
+        [
+            'email.required' => 'You must enter a valid email address',
+            'email.email' => 'You must enter a valid email address',
+        ]
+    );
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
@@ -40,8 +46,8 @@ class PasswordResetLinkController extends Controller
         );
 
         return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
+                    ? back()->with('status', ' A password reset link has been sent to the address' . $request->email)
                     : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+                            ->withErrors(['email' => 'The ' . $request->email . 'address is not registered on the site']);
     }
 }

@@ -1,7 +1,7 @@
 @extends('front.template')
 
-@section('meta_title', 'Login')
-@section('meta_description', 'Login User')
+@section('meta_title', 'Password Reset')
+@section('meta_description', 'Reset')
 @section('meta_keywords', 'Login User')
 
 
@@ -10,10 +10,10 @@
 <!-- Page Header Start -->
 <div class="container-fluid bg-secondary mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">Login User</h1>
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Password Reset</h1>
 
         <div class="col-md-6">
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('password.email') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="email">Your Email *</label>
@@ -24,23 +24,31 @@
                     </div>
                     @enderror
                 </div>
-                <div class="form-group">
-                    <label for="password">Your Password *</label>
-                    <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password">
-                    @error('password')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
+
 
                 <div class="form-group mb-30" style="text-align: center;">
-                    <input type="submit" value="Login" class="btn btn-primary px-3">
+                    <input type="submit" value="Reset" class="btn btn-primary px-3">
                 </div>
-            </form><br>
-            <div style="text-align: center;">
-                <a href="{{ route('password.request') }}">V-ati uitat parola contului. Click pentru resetare!</a>
-            </div>
+            </form>
+
+            @php
+                if (session('status')) {
+                    alert()
+                        ->success('The link has been sent', session('status'))
+                        ->persistent(true, false);
+                }
+
+            @endphp
+            {{ session('status') }}
+
+            @error('email')
+                @php
+                    alert()
+                        ->error('Error', $message )
+                        ->persistent(true, false);
+                @endphp
+            @enderror
+
         </div>
     </div>
 </div><br><br><br>

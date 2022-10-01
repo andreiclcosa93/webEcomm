@@ -24,12 +24,12 @@
             <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
             <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
             @endguest
-            @auth
+            {{-- @auth
             <form action="{{ route('logout') }}" method="POST" class="d-none" id="logout-form">
                 @csrf
             </form>
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-item nav-link">Logout</a>
-            @endauth
+            @endauth --}}
         </div>
     </div>
 </nav>

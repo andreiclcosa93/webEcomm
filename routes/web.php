@@ -24,5 +24,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/front/pages.php';
+require __DIR__.'/front/user.php';
+require __DIR__.'/admin/staff.php';
 
 

@@ -40,7 +40,21 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ],
+            [
+                'name.required' => 'You must enter a username',
+                'name.string' => 'The name must be a string of characters - it cannot start with a number',
+                'name.max' => 'The name may not exceed 255 octopus, including empty spaces',
+
+                'email.required' => 'Email address is required',
+                'email.email' => 'You must enter a valid email address',
+                'email.unique' => 'This email address is already registered on the site',
+                'email.max' => 'Eemail cannot be more than 255 characters long',
+
+                'password.required' => 'You must enter a password for your account',
+                'password.confirmed' => 'You have not confirmed your password correctly'
+            ]
+    );
 
         $user = User::create([
             'name' => $request->name,

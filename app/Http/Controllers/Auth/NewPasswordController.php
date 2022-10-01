@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Auth\Events\PasswordReset;
 
 class NewPasswordController extends Controller
 {
@@ -20,7 +21,8 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request)
     {
-        return view('auth.reset-password', ['request' => $request]);
+        // return view('auth.reset-password', ['request' => $request]);
+        return view('front.user.new-password', ['request' => $request]);
     }
 
     /**
@@ -37,7 +39,15 @@ class NewPasswordController extends Controller
             'token' => ['required'],
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ],
+        [
+            'token.require' => ' Password reset url is not valid',
+            'email.email' => 'You must enter a valid email address',
+            'email.require' => 'You must enter a valid email address',
+            'password.required' => 'You must enter the new password and confirm it',
+            'password.confirmed' => 'You must enter the new password and confirm it',
+        ]
+    );
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
@@ -57,9 +67,19 @@ class NewPasswordController extends Controller
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
-        return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+        if($status == Password::PASSWORD_RESET){
+            Alert::success(' The password has been changed', 'The new password is' . $request->password)->persistent(true, false);
+            return redirect()->route('login')->with('status', __($status));
+        } else {
+            return
+                back()->withInput($request->only('email'))
+                ->withErrors(['email' => __($status)]);
+        }
+
+
+        // return $status == Password::PASSWORD_RESET
+        //             ? redirect()->route('login')->with('status', __($status))
+        //             : back()->withInput($request->only('email'))
+        //                     ->withErrors(['email' => __($status)]);
     }
 }

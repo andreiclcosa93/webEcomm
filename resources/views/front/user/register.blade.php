@@ -18,19 +18,39 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">Your Name *</label>
-                    <input name="name" type="text" class="form-control" id="name">
+                    <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name">
+                    @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="email">Your Email *</label>
-                    <input name="email" type="email" class="form-control" id="email">
+                    <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email">
+                    @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="password">Your Password *</label>
-                    <input name="password" type="password" class="form-control" id="password">
+                    <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password">
+                    @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation">Confirm Password *</label>
-                    <input name="password_confirmation" type="password" class="form-control" id="password_confirmation">
+                    <input name="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation">
+                    @error('password_confirmation')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group mb-30" style="text-align: center;">
                     <input type="submit" value="Create Account" class="btn btn-primary px-3">

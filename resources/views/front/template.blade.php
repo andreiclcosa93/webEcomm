@@ -39,7 +39,7 @@
 
 
   @include('front.partials.scripts')
-  @incldue('sweetalert::alert')
+  @include('sweetalert::alert')
 </body>
 
 </html>
