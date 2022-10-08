@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Staff;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -33,6 +35,11 @@ class AuthServiceProvider extends ServiceProvider
                 ->subject('account validation')
                 ->line('click on the button to validate the account')
                 ->action('validate the account: ', $url);
+        });
+
+        //gate manager
+        Gate::define('manager', function(Staff $staff) {
+            return $staff->type == 'manager';
         });
     }
 }

@@ -12,6 +12,8 @@
             </div>
             <div id="layoutSidenav_content">
 
+                @include('admin.partials.messages')
+
               @yield('content')
 
               @include('admin.partials.footer')
@@ -20,3 +22,7 @@
         </div>
 
 @include('admin.partials.scripts')
+@include('sweetalert::alert')
+@yield('customJs')
+</body>
+</html>
