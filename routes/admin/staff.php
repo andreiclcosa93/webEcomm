@@ -26,7 +26,25 @@ Route::prefix('staff/cpanel')->middleware(['auth:staff'])->group(function() {
 Route::prefix('staff/cpanel/manager')->middleware(['auth:staff', 'manager'])->group(function() {
 
     Route::get('/staff', [ManagerController::class, 'showStaff'])->name('show.staff');
+
+
+    //adding a staff member
     Route::get('/staff/new', [ManagerController::class, 'newStaff'])->name('new.staff');
+    Route::post('/staff/new', [ManagerController::class, 'createStaff'])->name('create.staff');
 
+    //editing the data of a staff member
+    Route::get('/staff/edit/{id}', [ManagerController::class, 'editStaff'])->name('edit.staff');
+    Route::put('/staff/edit/{id}', [ManagerController::class, 'updateStaff'])->name('update.staff');
 
+    // changing the password of a staff member
+    Route::put('/staff/edit/pass/{id}', [ManagerController::class, 'updatePassword'])->name('password.staff');
+
+    //block staff member
+    Route::delete('/staff/block/{id}', [ManagerController::class, 'blockStaff'])->name('block.staff');
+
+    // unlocking the member
+    Route::put('/staff/restore/{id}', [ManagerController::class, 'restoreStaff'])->name('restore.staff');
+
+    // delete permanent
+    Route::delete('/staff/remove/{id}', [ManagerController::class, 'removeStaff'])->name('remove.staff');
 });
